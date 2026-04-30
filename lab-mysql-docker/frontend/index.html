@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="panel">
+      <h1>Login</h1>
+      <p class="subtitle">Use <strong>admin</strong> e <strong>123456</strong>.</p>
+
+      <form id="login-form">
+        <div class="field">
+          <label for="usuario">Usuario</label>
+          <input type="text" id="usuario" name="usuario" required />
+        </div>
+
+        <div class="field">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" name="senha" required />
+        </div>
+
+        <div class="actions">
+          <button type="submit">Entrar</button>
+          <button type="button" id="logout-btn">Sair</button>
+        </div>
+      </form>
+
+      <p id="mensagem" class="mensagem" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1,1 +1,4 @@
 .vscode
+lab-mysql-docker/.codex
+lab-mysql-docker/app/node_modules
+lab-mysql-docker/mysql_data
