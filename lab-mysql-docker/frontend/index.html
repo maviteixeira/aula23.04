@@ -3,35 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login</title>
+  <title>Laboratorio CRUD de Usuarios</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <main class="container">
-    <section class="panel">
-      <h1>Login</h1>
-      <p class="subtitle">Use <strong>admin</strong> e <strong>123456</strong>.</p>
+  <header class="site-header">
+    <h1>Laboratorio CRUD de Usuarios</h1>
+    <p>Projeto didatico com HTML, CSS, Docker, Node.js e MySQL.</p>
+  </header>
 
-      <form id="login-form">
+  <main class="layout">
+    <section class="panel">
+      <h2>Cadastro de Usuario</h2>
+
+      <form id="usuario-form">
+        <input type="hidden" id="usuario-id" name="id" />
+
         <div class="field">
-          <label for="usuario">Usuario</label>
-          <input type="text" id="usuario" name="usuario" required />
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" required />
         </div>
 
         <div class="field">
-          <label for="senha">Senha</label>
-          <input type="password" id="senha" name="senha" required />
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
         </div>
 
         <div class="actions">
-          <button type="submit">Entrar</button>
-          <button type="button" id="logout-btn">Sair</button>
+          <button type="submit">Salvar</button>
+          <button type="button" id="cancelar-edicao">Cancelar edicao</button>
         </div>
       </form>
 
       <p id="mensagem" class="mensagem" aria-live="polite"></p>
     </section>
+
+    <section class="panel">
+      <h2>Usuarios cadastrados</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Acoes</th>
+            </tr>
+          </thead>
+          <tbody id="usuarios-tabela"></tbody>
+        </table>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <small>Disciplina de desenvolvimento web com containers</small>
+  </footer>
 
   <script src="./app.js"></script>
 </body>

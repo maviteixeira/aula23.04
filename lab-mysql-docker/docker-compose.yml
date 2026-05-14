@@ -13,7 +13,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   app:
@@ -37,5 +37,5 @@ services:
     depends_on:
       - app
 
-# volumes:
-#   mysql_data:
+volumes:
+  mysql_data:
