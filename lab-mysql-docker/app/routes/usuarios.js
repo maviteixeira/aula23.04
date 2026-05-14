@@ -1,9 +1,10 @@
 const express = require('express');
 const controller = require('../controllers/usuariosControllers');
+const exigirLogin = require('../middlewares/auth');
 
 const router = express.Router();
 
-
+router.use(exigirLogin);
 
 
 router.get('/', controller.listar);

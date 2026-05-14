@@ -118,3 +118,34 @@ td .acao {
     flex-direction: column;
   }
 }
+
+/* Login Page Styles */
+.login-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f6f1e8 0%, #dcd1bd 100%);
+}
+
+.login-container {
+  width: min(400px, calc(100% - 32px));
+}
+
+.login-container .panel {
+  box-shadow: 0 20px 50px rgba(40, 30, 20, 0.15);
+}
+
+.btn-logout {
+  background: #8a8175;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
