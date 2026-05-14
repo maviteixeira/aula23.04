@@ -167,6 +167,29 @@ Retorna todos os usuários:
 
 ---
 
+## 🛡️ CORS (Cross-Origin Resource Sharing)
+
+Para que o frontend consiga consumir a API sem erros de segurança, o CORS deve estar configurado no backend. 
+
+### ⚙️ Configuração Necessária
+
+No arquivo `app/server.js`, certifique-se de que o middleware `cors` está sendo utilizado:
+
+```javascript
+const cors = require('cors');
+
+app.use(cors({
+  origin: ['http://localhost:8080', 'http://127.0.0.1:8080'], 
+  credentials: true 
+}));
+
+app.options('*', cors());
+```
+
+Isso permite que requisições originadas do frontend (rodando na porta 8080) sejam aceitas pela API.
+
+---
+
 ## 🔄 Ciclo de Vida dos Containers
 
 ```mermaid id="lifecycle01"
