@@ -1,4 +1,4 @@
-````markdown
+
 # Protótipo da Aplicação — Laboratório CRUD de Usuários
 
 Este documento apresenta um protótipo funcional e conceitual da aplicação desenvolvida ao longo das aulas do laboratório de desenvolvimento web utilizando:
@@ -417,4 +417,3 @@ Ao final do projeto, os alunos terão desenvolvido uma aplicação web moderna c
 - organização profissional de código
 
 O projeto representa uma aplicação real simplificada, semelhante à estrutura utilizada em ambientes profissionais modernos.
-````
