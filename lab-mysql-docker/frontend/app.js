@@ -28,6 +28,13 @@ const AUTH_URL = 'http://localhost:3000/auth';
 ================================ */
 
 function mostrarMensagem(texto, tipo = 'success') {
+  if (!mensagem) {
+    console.error(
+      'Elemento #mensagem não foi encontrado no index.html.'
+    );
+    return;
+  }
+
   mensagem.textContent = texto;
   mensagem.dataset.type = tipo;
 }
@@ -80,9 +87,17 @@ function atualizarResumo(atividades) {
     (atividade) => atividade.status === 'Concluída'
   ).length;
 
-  contadorPendentes.textContent = pendentes;
-  contadorAndamento.textContent = emAndamento;
-  contadorConcluidas.textContent = concluidas;
+  if (contadorPendentes) {
+    contadorPendentes.textContent = pendentes;
+  }
+
+  if (contadorAndamento) {
+    contadorAndamento.textContent = emAndamento;
+  }
+
+  if (contadorConcluidas) {
+    contadorConcluidas.textContent = concluidas;
+  }
 }
 
 /* ===============================
@@ -417,18 +432,23 @@ async function fazerLogout() {
   logoutBtn.textContent = 'Saindo...';
 
   try {
-    await fetch(`${AUTH_URL}/logout`, {
+    const resposta = await fetch(`${AUTH_URL}/logout`, {
       method: 'POST',
       credentials: 'include'
     });
+
+    if (!resposta.ok) {
+      throw new Error('Não foi possível encerrar a sessão.');
+    }
+
+    window.location.replace('login.html');
   } catch (error) {
     console.error('Erro ao realizar logout:', error);
-  } finally {
-    /*
-      Mesmo que a API esteja momentaneamente indisponível,
-      a pessoa volta para a tela de login.
-    */
-    window.location.replace('login.html');
+
+    logoutBtn.disabled = false;
+    logoutBtn.textContent = 'Sair';
+
+    alert('Não foi possível encerrar a sessão. Tente novamente.');
   }
 }
 
