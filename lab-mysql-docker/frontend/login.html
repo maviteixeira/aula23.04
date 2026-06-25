@@ -1,31 +1,111 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Laboratorio CRUD</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Entrar | Anotebook</title>
+
+  <link rel="stylesheet" href="login.css">
+  <script src="login.js" defer></script>
 </head>
-<body class="login-page">
-  <main class="login-container">
-    <section class="panel">
-      <h2>Acesso ao Sistema</h2>
-      <form id="login-form">
-        <div class="field">
-          <label for="usuario">Usuário</label>
-          <input type="text" id="usuario" name="usuario" required />
+
+<body class="auth-page">
+  <div class="auth-background" aria-hidden="true">
+    <span class="grid-pattern"></span>
+    <span class="bloom bloom-primary"></span>
+    <span class="bloom bloom-secondary"></span>
+  </div>
+
+  <main class="auth-layout">
+    <section class="auth-wrapper" aria-labelledby="login-title">
+      <header class="brand-header">
+        <div class="brand-symbol" aria-hidden="true">
+          <span class="brand-mark" aria-hidden="true">A</span>
+
+          <span class="brand-tabs">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
         </div>
-        <div class="field">
-          <label for="senha">Senha</label>
-          <input type="password" id="senha" name="senha" required />
-        </div>
-        <div class="actions">
-          <button type="submit" style="width: 100%;">Entrar</button>
-        </div>
-      </form>
-      <p id="mensagem" class="mensagem" aria-live="polite"></p>
+
+        <p class="brand-eyebrow">PAINEL ACADÊMICO</p>
+
+        <h1 id="login-title">Anotebook</h1>
+
+        <p class="brand-subtitle">
+          Seu bloco de notas acadêmico
+        </p>
+      </header>
+
+      <section class="auth-card" aria-label="Formulário de login">
+        <p class="auth-description">
+          Organize provas, trabalhos, leituras, projetos e prazos
+          acadêmicos em um só lugar.
+        </p>
+
+        <form id="login-form" class="login-form">
+          <div class="field">
+            <label for="usuario">Usuário</label>
+
+            <div class="input-wrapper">
+              <span class="input-icon" aria-hidden="true">◉</span>
+
+              <input
+                id="usuario"
+                name="usuario"
+                type="text"
+                autocomplete="username"
+                placeholder="Digite seu usuário"
+                required
+                autofocus
+              >
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="senha">Senha</label>
+
+            <div class="input-wrapper">
+              <span class="input-icon" aria-hidden="true">●</span>
+
+              <input
+                id="senha"
+                name="senha"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Digite sua senha"
+                required
+              >
+            </div>
+          </div>
+
+          <button
+            id="login-btn"
+            class="login-button"
+            type="submit"
+          >
+            <span>Entrar no Anotebook</span>
+            <span aria-hidden="true">→</span>
+          </button>
+
+          <p
+            id="mensagem"
+            class="mensagem"
+            role="alert"
+            aria-live="assertive"
+          ></p>
+        </form>
+      </section>
+
+      <footer class="auth-footer">
+        <p>Planeje, estude e acompanhe sua rotina acadêmica.</p>
+      </footer>
     </section>
   </main>
-  <script src="./login.js"></script>
 </body>
 </html>

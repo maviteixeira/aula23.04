@@ -149,3 +149,13 @@ td .acao {
   max-width: 1100px;
   margin: 0 auto;
 }
+
+.login-logo {
+  display: block;
+  width: 104px;
+  height: 104px;
+  margin: 0 auto 22px;
+  border-radius: 22px;
+  object-fit: cover;
+  box-shadow: 0 12px 32px rgba(19, 79, 215, 0.28);
+}
