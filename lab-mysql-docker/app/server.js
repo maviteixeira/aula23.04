@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors'); 
-const usuariosRoutes = require('./routes/usuarios');
+const atividadesRoutes = require('./routes/atividades');
 const authRoutes = require('./routes/auth');
 
 const app = express();
@@ -28,7 +28,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
-app.use('/usuarios', usuariosRoutes);
+app.use('/atividades', atividadesRoutes);
 
 app.listen(3000, () => {
   console.log('API rodando na porta 3000');

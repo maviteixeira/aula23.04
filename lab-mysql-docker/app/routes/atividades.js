@@ -1,11 +1,10 @@
 const express = require('express');
-const controller = require('../controllers/usuariosControllers');
+const controller = require('../controllers/atividadesControllers');
 const exigirLogin = require('../middlewares/auth');
 
 const router = express.Router();
 
 router.use(exigirLogin);
-
 
 router.get('/', controller.listar);
 router.get('/:id', controller.buscarPorId);
