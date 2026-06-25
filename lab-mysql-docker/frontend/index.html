@@ -1,71 +1,590 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html class="dark" lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Laboratorio CRUD de Usuarios</title>
-  <link rel="stylesheet" href="./styles.css" />
+  <meta charset="utf-8">
+  <meta
+    content="width=device-width, initial-scale=1.0"
+    name="viewport"
+  >
+
+  <title>Anotebook | Dashboard</title>
+
+  <!-- Tailwind para o visual gerado pelo Stitch -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Fontes -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Ícones -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- JavaScript real do CRUD -->
+  <script src="app.js" defer></script>
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "background": "#0B1023",
+            "surface": "#11131d",
+            "surface-container-lowest": "#0c0d17",
+            "surface-container-low": "#1a1b25",
+            "surface-container": "#1e1f29",
+            "surface-container-high": "#282934",
+            "surface-container-highest": "#33343f",
+            "surface-variant": "#33343f",
+
+            "on-surface": "#e2e1f0",
+            "on-surface-variant": "#c4c5da",
+
+            "primary": "#bcc3ff",
+            "primary-container": "#1e40ff",
+
+            "secondary": "#a2e7ff",
+            "secondary-container": "#00d2fd",
+
+            "tertiary": "#cebdff",
+            "tertiary-container": "#674bb5",
+
+            "outline": "#8e8fa3",
+            "outline-variant": "#444657",
+
+            "error": "#ffb4ab",
+            "error-container": "#93000a"
+          },
+
+          fontFamily: {
+            "body": ["Inter", "sans-serif"],
+            "display": ["Space Grotesk", "sans-serif"]
+          },
+
+          borderRadius: {
+            "xl": "0.75rem"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0B1023;
+      color: #e2e1f0;
+    }
+
+    .glass-panel {
+      background: rgba(40, 41, 52, 0.40);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.10);
+      border-left: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .bloom-primary {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(
+        circle,
+        rgba(30, 64, 255, 0.15) 0%,
+        rgba(11, 16, 35, 0) 70%
+      );
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .bloom-secondary {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(
+        circle,
+        rgba(0, 210, 253, 0.10) 0%,
+        rgba(11, 16, 35, 0) 70%
+      );
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .input-academic {
+      background-color: #0B1023;
+      border: 1px solid rgba(142, 143, 163, 0.30);
+      transition: all 0.3s ease;
+    }
+
+    .input-academic:focus {
+      border-color: #00d2fd;
+      box-shadow: 0 1px 0 0 #00d2fd;
+      outline: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1e40ff 0%, #00d2fd 100%);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 15px rgba(0, 210, 253, 0.40);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #00d2fd;
+      color: #00d2fd;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0, 210, 253, 0.10);
+    }
+
+    .abstract-lines {
+      background-image:
+        radial-gradient(
+          circle at 15% 50%,
+          rgba(0, 210, 253, 0.08),
+          transparent 25%
+        ),
+        radial-gradient(
+          circle at 85% 30%,
+          rgba(30, 64, 255, 0.08),
+          transparent 25%
+        );
+    }
+
+    .logo-glow {
+      filter: drop-shadow(0 0 12px rgba(0, 210, 253, 0.30));
+    }
+
+    .table-wrapper {
+      scrollbar-color: #00d2fd #1a1b25;
+      scrollbar-width: thin;
+    }
+  </style>
 </head>
-<body>
-  <header class="site-header">
-    <div class="header-content">
-      <div style="text-align: left;">
-        <h1>Laboratorio CRUD de Usuarios</h1>
-        <p>Projeto didatico com HTML, CSS, Docker, Node.js e MySQL.</p>
+
+<body class="font-body antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+  <!-- Efeitos decorativos de fundo -->
+  <div class="bloom-primary top-0 left-0"></div>
+  <div class="bloom-secondary top-40 right-20"></div>
+
+  <!-- Cabeçalho -->
+  <header class="bg-surface/80 backdrop-blur-xl sticky top-0 border-b border-outline-variant/20 shadow-sm shadow-primary/5 z-50">
+    <div class="flex justify-between items-center w-full px-5 md:px-16 py-4 max-w-[1440px] mx-auto">
+      <div class="flex items-center gap-4">
+        <img
+          src="assets/logo-anotebook.png"
+          alt="Logo do Anotebook"
+          class="h-11 w-11 object-contain rounded-lg logo-glow"
+        >
+
+        <div class="flex flex-col">
+          <span class="font-display font-bold text-primary text-[24px] leading-none">
+            Anotebook
+          </span>
+
+          <span class="text-secondary uppercase tracking-widest text-[10px] mt-1">
+            Seu bloco de notas acadêmico
+          </span>
+        </div>
       </div>
-      <button id="logout-btn" class="btn-logout">Sair</button>
+
+      <div class="flex items-center gap-4 md:gap-6">
+        <div class="hidden sm:flex items-center gap-3">
+          <span class="text-on-surface">
+            Olá, Maria
+          </span>
+
+          <span
+            class="w-8 h-8 rounded-full border border-secondary/50 bg-primary-container flex items-center justify-center text-secondary font-bold"
+            aria-hidden="true"
+          >
+            M
+          </span>
+        </div>
+
+        <button
+          id="logout-btn"
+          class="btn-secondary px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 active:scale-95 transition-transform"
+          type="button"
+        >
+          <span class="material-symbols-outlined text-[18px]">
+            logout
+          </span>
+          Sair
+        </button>
+      </div>
     </div>
   </header>
 
-  <main class="layout">
-    <section class="panel">
-      <h2>Cadastro de Usuario</h2>
+  <main class="flex-grow w-full px-5 md:px-16 py-6 max-w-[1440px] mx-auto space-y-8 mt-4">
+    <!-- Apresentação -->
+    <section class="glass-panel rounded-xl p-6 md:p-8 relative overflow-hidden abstract-lines">
+      <div class="relative z-10 max-w-2xl">
+        <span class="text-secondary tracking-[0.2em] uppercase block mb-4 text-xs font-semibold">
+          Painel acadêmico
+        </span>
 
-      <form id="usuario-form">
-        <input type="hidden" id="usuario-id" name="id" />
+        <h1 class="font-display text-3xl md:text-4xl font-semibold text-on-surface mb-4">
+          Organize seus estudos em um só lugar.
+        </h1>
 
-        <div class="field">
-          <label for="nome">Nome</label>
-          <input type="text" id="nome" name="nome" required />
-        </div>
-
-        <div class="field">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
-        </div>
-
-        <div class="actions">
-          <button type="submit">Salvar</button>
-          <button type="button" id="cancelar-edicao">Cancelar edicao</button>
-        </div>
-      </form>
-
-      <p id="mensagem" class="mensagem" aria-live="polite"></p>
+        <p class="text-base md:text-lg text-on-surface-variant leading-relaxed">
+          Registre provas, trabalhos, leituras, projetos e prazos importantes
+          para acompanhar sua rotina acadêmica.
+        </p>
+      </div>
     </section>
 
-    <section class="panel">
-      <h2>Usuarios cadastrados</h2>
+    <!-- Cards de resumo -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6" aria-label="Resumo de atividades">
+      <article class="glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-surface-variant/20 to-transparent z-0"></div>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>Email</th>
-              <th>Acoes</th>
-            </tr>
-          </thead>
-          <tbody id="usuarios-tabela"></tbody>
-        </table>
-      </div>
+        <div class="relative z-10 flex justify-between items-start mb-4">
+          <span class="text-on-surface-variant uppercase text-sm font-semibold">
+            Pendentes
+          </span>
+
+          <span class="material-symbols-outlined text-outline">
+            schedule
+          </span>
+        </div>
+
+        <div class="relative z-10">
+          <span
+            id="contador-pendentes"
+            class="font-display text-5xl font-bold text-on-surface block mb-2"
+          >
+            0
+          </span>
+
+          <span class="text-xs text-on-surface-variant">
+            Atividades ainda não iniciadas
+          </span>
+        </div>
+      </article>
+
+      <article class="glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-secondary/5 to-tertiary/5 z-0"></div>
+
+        <div class="relative z-10 flex justify-between items-start mb-4">
+          <span class="text-secondary uppercase text-sm font-semibold">
+            Em andamento
+          </span>
+
+          <span class="material-symbols-outlined text-secondary">
+            trending_up
+          </span>
+        </div>
+
+        <div class="relative z-10">
+          <span
+            id="contador-andamento"
+            class="font-display text-5xl font-bold text-secondary block mb-2"
+          >
+            0
+          </span>
+
+          <span class="text-xs text-on-surface-variant">
+            Atividades em desenvolvimento
+          </span>
+        </div>
+      </article>
+
+      <article class="glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-secondary-container/10 to-transparent z-0"></div>
+
+        <div class="relative z-10 flex justify-between items-start mb-4">
+          <span class="text-secondary-container uppercase text-sm font-semibold">
+            Concluídas
+          </span>
+
+          <span class="material-symbols-outlined text-secondary-container">
+            task_alt
+          </span>
+        </div>
+
+        <div class="relative z-10">
+          <span
+            id="contador-concluidas"
+            class="font-display text-5xl font-bold text-secondary-container block mb-2"
+          >
+            0
+          </span>
+
+          <span class="text-xs text-on-surface-variant">
+            Atividades finalizadas
+          </span>
+        </div>
+      </article>
+    </section>
+
+    <!-- Conteúdo principal -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- Formulário -->
+      <section class="lg:col-span-4 glass-panel rounded-xl p-6 h-fit lg:sticky lg:top-24">
+        <h2 class="font-display text-2xl font-semibold text-on-surface mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary">
+            add_circle
+          </span>
+          Adicionar atividade
+        </h2>
+
+        <form id="atividade-form" class="space-y-5">
+          <input id="atividade-id" type="hidden">
+
+          <div>
+            <label
+              for="titulo"
+              class="block text-sm font-semibold text-on-surface-variant mb-2"
+            >
+              Título da atividade
+            </label>
+
+            <input
+              id="titulo"
+              class="w-full input-academic rounded-lg px-4 py-3 text-on-surface placeholder-outline font-body"
+              placeholder="Ex.: Revisar conteúdo para a prova"
+              type="text"
+              maxlength="120"
+              required
+            >
+          </div>
+
+          <div>
+            <label
+              for="disciplina"
+              class="block text-sm font-semibold text-on-surface-variant mb-2"
+            >
+              Matéria / Disciplina
+            </label>
+
+            <input
+              id="disciplina"
+              class="w-full input-academic rounded-lg px-4 py-3 text-on-surface placeholder-outline font-body"
+              placeholder="Ex.: Desenvolvimento Web"
+              type="text"
+              maxlength="100"
+              required
+            >
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label
+                for="prazo"
+                class="block text-sm font-semibold text-on-surface-variant mb-2"
+              >
+                Prazo
+              </label>
+
+              <input
+                id="prazo"
+                class="w-full input-academic rounded-lg px-4 py-3 text-on-surface font-body [color-scheme:dark]"
+                type="date"
+                required
+              >
+            </div>
+
+            <div>
+              <label
+                for="prioridade"
+                class="block text-sm font-semibold text-on-surface-variant mb-2"
+              >
+                Prioridade
+              </label>
+
+              <select
+                id="prioridade"
+                class="w-full input-academic rounded-lg px-4 py-3 text-on-surface font-body appearance-none"
+                required
+              >
+                <option value="" selected disabled>Selecione</option>
+                <option value="Alta">Alta</option>
+                <option value="Média">Média</option>
+                <option value="Baixa">Baixa</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label
+                for="categoria"
+                class="block text-sm font-semibold text-on-surface-variant mb-2"
+              >
+                Categoria
+              </label>
+
+              <select
+                id="categoria"
+                class="w-full input-academic rounded-lg px-4 py-3 text-on-surface font-body appearance-none"
+                required
+              >
+                <option value="" selected disabled>Selecione</option>
+                <option value="Prova">Prova</option>
+                <option value="Trabalho">Trabalho</option>
+                <option value="Leitura">Leitura</option>
+                <option value="Projeto">Projeto</option>
+                <option value="Relatório">Relatório</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                for="status"
+                class="block text-sm font-semibold text-on-surface-variant mb-2"
+              >
+                Status
+              </label>
+
+              <select
+                id="status"
+                class="w-full input-academic rounded-lg px-4 py-3 text-on-surface font-body appearance-none"
+                required
+              >
+                <option value="Pendente">Pendente</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Concluída">Concluída</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="descricao"
+              class="block text-sm font-semibold text-on-surface-variant mb-2"
+            >
+              Descrição
+            </label>
+
+            <textarea
+              id="descricao"
+              class="w-full input-academic rounded-lg px-4 py-3 text-on-surface placeholder-outline font-body h-24 resize-none"
+              placeholder="Detalhes adicionais..."
+              maxlength="500"
+            ></textarea>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <button
+              id="salvar-btn"
+              class="w-full btn-primary py-3 rounded-lg text-sm font-semibold flex justify-center items-center gap-2"
+              type="submit"
+            >
+              <span class="material-symbols-outlined">
+                save
+              </span>
+              Salvar atividade
+            </button>
+
+            <button
+              id="cancelar-edicao"
+              class="w-full btn-secondary py-3 rounded-lg text-sm font-semibold"
+              type="button"
+              hidden
+            >
+              Cancelar edição
+            </button>
+          </div>
+
+          <p
+            id="mensagem"
+            class="min-h-6 text-sm font-medium"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </form>
+      </section>
+
+      <!-- Tabela -->
+      <section class="lg:col-span-8 glass-panel rounded-xl p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="font-display text-2xl font-semibold text-on-surface flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary">
+              format_list_bulleted
+            </span>
+            Atividades cadastradas
+          </h2>
+        </div>
+
+        <div class="overflow-x-auto table-wrapper">
+          <table class="w-full min-w-[850px] text-left border-collapse">
+            <thead>
+              <tr class="border-b border-outline-variant/20">
+                <th class="py-4 px-4 text-sm text-on-surface-variant font-medium">
+                  Atividade
+                </th>
+
+                <th class="py-4 px-4 text-sm text-on-surface-variant font-medium">
+                  Disciplina
+                </th>
+
+                <th class="py-4 px-4 text-sm text-on-surface-variant font-medium">
+                  Categoria
+                </th>
+
+                <th class="py-4 px-4 text-sm text-on-surface-variant font-medium">
+                  Prioridade
+                </th>
+
+                <th class="py-4 px-4 text-sm text-on-surface-variant font-medium">
+                  Prazo
+                </th>
+
+                <th class="py-4 px-4 text-sm text-on-surface-variant font-medium">
+                  Status
+                </th>
+
+                <th class="py-4 px-4 text-sm text-on-surface-variant font-medium text-right">
+                  Ações
+                </th>
+              </tr>
+            </thead>
+
+            <tbody
+              id="atividades-tabela"
+              class="text-on-surface divide-y divide-outline-variant/10"
+            ></tbody>
+          </table>
+        </div>
+      </section>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <small>Disciplina de desenvolvimento web com containers</small>
-  </footer>
+  <!-- Rodapé -->
+  <footer class="bg-surface-container-lowest border-t border-outline-variant/10 mt-12">
+    <div class="flex flex-col md:flex-row justify-between items-center w-full px-5 md:px-16 py-6 max-w-[1440px] mx-auto gap-3">
+      <div class="flex flex-col md:flex-row items-center gap-2 text-center md:text-left">
+        <span class="font-display text-primary text-lg font-semibold">
+          Anotebook
+        </span>
 
-  <script src="./app.js"></script>
+        <span class="hidden md:inline text-on-surface-variant">
+          |
+        </span>
+
+        <span class="text-sm text-on-surface-variant">
+          © 2026 Anotebook · Seu bloco de notas acadêmico.
+        </span>
+      </div>
+
+      <span class="text-xs text-on-surface-variant">
+        Organize. Estude. Evolua.
+      </span>
+    </div>
+  </footer>
 </body>
 </html>
