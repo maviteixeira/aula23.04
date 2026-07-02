@@ -1,0 +1,365 @@
+:root {
+  --background: #0b1023;
+  --background-light: #111a36;
+
+  --surface: rgba(17, 25, 55, 0.74);
+  --surface-dark: rgba(8, 13, 30, 0.88);
+
+  --text: #e8f0ff;
+  --text-secondary: #aebcda;
+  --text-muted: #7786a8;
+
+  --blue: #1e40ff;
+  --blue-light: #4f72ff;
+  --cyan: #00d4ff;
+  --purple: #a78bfa;
+
+  --danger: #ff91a5;
+  --border: rgba(170, 190, 255, 0.20);
+
+  --radius-card: 24px;
+  --radius-field: 12px;
+  --shadow: 0 28px 80px rgba(0, 0, 0, 0.46);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  color: var(--text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  background: var(--background);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid rgba(0, 212, 255, 0.65);
+  outline-offset: 3px;
+}
+
+.auth-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(
+      circle at 18% 16%,
+      rgba(30, 64, 255, 0.22),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 84% 80%,
+      rgba(167, 139, 250, 0.16),
+      transparent 28%
+    ),
+    linear-gradient(135deg, #070b1a, #0b1023 58%, #111d40);
+}
+
+.auth-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.grid-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.30;
+  background-image: radial-gradient(
+    rgba(232, 240, 255, 0.20) 1px,
+    transparent 1px
+  );
+  background-size: 32px 32px;
+  mask-image: linear-gradient(
+    135deg,
+    black,
+    transparent 82%
+  );
+}
+
+.bloom {
+  position: absolute;
+  width: 430px;
+  height: 430px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.38;
+}
+
+.bloom-primary {
+  top: -170px;
+  left: -120px;
+  background: var(--blue);
+}
+
+.bloom-secondary {
+  right: -140px;
+  bottom: -190px;
+  background: var(--cyan);
+}
+
+.auth-layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 36px 18px;
+}
+
+.auth-wrapper {
+  width: min(100%, 480px);
+}
+
+.brand-header {
+  margin-bottom: 26px;
+  text-align: center;
+}
+
+.brand-symbol {
+  position: relative;
+  display: inline-grid;
+  width: 84px;
+  height: 84px;
+  margin-bottom: 18px;
+  place-items: center;
+  border: 1px solid rgba(0, 212, 255, 0.34);
+  border-radius: 23px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(30, 64, 255, 0.85),
+      rgba(0, 212, 255, 0.24)
+    );
+  box-shadow:
+    0 0 32px rgba(30, 64, 255, 0.38),
+    inset 0 1px 1px rgba(255, 255, 255, 0.22);
+}
+
+.brand-letter {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+  font-family: "Arial Black", "Segoe UI", sans-serif;
+  font-size: 3.25rem;
+  font-style: italic;
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 0 7px 18px rgba(0, 0, 0, 0.28);
+}
+
+.brand-tabs {
+  position: absolute;
+  right: -14px;
+  display: grid;
+  gap: 6px;
+}
+
+.brand-tabs i {
+  display: block;
+  width: 22px;
+  height: 14px;
+  border-radius: 0 8px 8px 0;
+}
+
+.brand-tabs i:nth-child(1) {
+  background: var(--cyan);
+}
+
+.brand-tabs i:nth-child(2) {
+  background: var(--blue-light);
+}
+
+.brand-tabs i:nth-child(3) {
+  background: var(--purple);
+}
+
+.brand-eyebrow {
+  margin: 0 0 8px;
+  color: var(--cyan);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.brand-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  font-size: clamp(2.25rem, 9vw, 3.2rem);
+  letter-spacing: -0.06em;
+}
+
+.brand-subtitle {
+  margin: 8px 0 0;
+  color: var(--purple);
+  font-size: 0.90rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.auth-card {
+  padding: 28px 23px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(25, 40, 83, 0.80),
+      rgba(7, 13, 31, 0.90)
+    );
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px);
+}
+
+.auth-description {
+  margin: 0 0 26px;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.login-form {
+  display: grid;
+  gap: 18px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field label {
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-field);
+  background: rgba(4, 10, 27, 0.66);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--cyan);
+  background: rgba(4, 10, 27, 0.90);
+  box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.12);
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  color: var(--cyan);
+  font-size: 0.9rem;
+  opacity: 0.90;
+}
+
+.input-wrapper input {
+  width: 100%;
+  border: 0;
+  padding: 14px 15px 14px 42px;
+  color: var(--text);
+  background: transparent;
+}
+
+.input-wrapper input:focus {
+  outline: 0;
+}
+
+.input-wrapper input::placeholder {
+  color: var(--text-muted);
+}
+
+.login-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 6px;
+  border: 1px solid rgba(141, 173, 255, 0.60);
+  border-radius: var(--radius-field);
+  padding: 14px 18px;
+  color: #ffffff;
+  font-weight: 800;
+  background: linear-gradient(
+    135deg,
+    var(--blue),
+    #2c63ff 52%,
+    var(--cyan)
+  );
+  box-shadow: 0 13px 26px rgba(30, 64, 255, 0.32);
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.login-button:hover:not(:disabled) {
+  filter: brightness(1.12);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px rgba(0, 212, 255, 0.22);
+}
+
+.login-button:disabled {
+  cursor: wait;
+  opacity: 0.70;
+}
+
+.mensagem {
+  min-height: 22px;
+  margin: 0;
+  color: var(--text-secondary);
+  text-align: center;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.mensagem[data-type="error"] {
+  color: var(--danger);
+}
+
+.auth-footer {
+  margin-top: 22px;
+  color: var(--text-muted);
+  text-align: center;
+  font-size: 0.79rem;
+}
+
+.auth-footer p {
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .auth-card {
+    padding: 36px 38px;
+  }
+}

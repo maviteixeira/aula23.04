@@ -13,6 +13,7 @@ const tabela = document.getElementById('atividades-tabela');
 const mensagem = document.getElementById('mensagem');
 const cancelarEdicaoBtn = document.getElementById('cancelar-edicao');
 const salvarBtn = document.getElementById('salvar-btn');
+const salvarBtnTexto = document.getElementById('salvar-btn-texto');
 const formTitle = document.getElementById('form-title');
 const logoutBtn = document.getElementById('logout-btn');
 
@@ -55,7 +56,7 @@ function limparFormulario() {
   statusInput.value = 'Pendente';
 
   formTitle.textContent = 'Adicionar atividade';
-  salvarBtn.textContent = 'Salvar atividade';
+  salvarBtnTexto.textContent = 'Salvar atividade';
 
   cancelarEdicaoBtn.hidden = true;
 }
@@ -366,7 +367,7 @@ async function editarAtividade(id) {
     descricaoInput.value = atividade.descricao || '';
 
     formTitle.textContent = 'Editar atividade';
-    salvarBtn.textContent = 'Atualizar atividade';
+    salvarBtnTexto.textContent = 'Atualizar atividade';
     cancelarEdicaoBtn.hidden = false;
 
     window.scrollTo({
