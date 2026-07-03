@@ -6,10 +6,10 @@ services:
     container_name: mysql_lab
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: lab_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user123
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
@@ -20,6 +20,8 @@ services:
     build: ./app
     container_name: app_lab
     restart: always
+    env_file:
+      - .env
     ports:
       - "3000:3000"
     depends_on:
